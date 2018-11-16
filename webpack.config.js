@@ -6,7 +6,7 @@ module.exports = {
         Vendor: "./app/assets/scripts/vendor.js"
     },
     output: {
-        path: path.resolve(__dirname, "./app/dist/scripts"), //generates an absolute path, needed by webpack
+        path: path.resolve(__dirname, "./app/temp/scripts"), //generates an absolute path, needed by webpack
         filename: "[name].js"
     },
     module: {

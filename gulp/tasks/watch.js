@@ -27,7 +27,7 @@ gulp.task('watch', function(){
 });
 
 gulp.task('cssInject', ['styles'], function(){//[dependencies that are run before the cssInject task, in this case the task styles]
-    return gulp.src('./app/dist/styles/styles.css')
+    return gulp.src('./app/temp/styles/styles.css')
         .pipe(browserSync.stream());
 });
 
