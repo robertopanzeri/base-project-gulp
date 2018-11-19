@@ -17,11 +17,11 @@ gulp.task('previewDist', function() {
     });
 });
 
-gulp.task('deleteDistFolder', ['icons'], function () {
+gulp.task('deleteDistFolder', gulp.series('icons'), function () {
     return del('./dist');
 });
 
-gulp.task('copyGeneralFiles', ['deleteDistFolder'], function() {// other files needed, not part of my app (e.g. Wordpress files)
+gulp.task('copyGeneralFiles', function() {// other files needed, not part of my app (e.g. Wordpress files)
     var pathsToCopy = [
         './app/**/*',
         '!./app/index.html',
@@ -35,7 +35,7 @@ gulp.task('copyGeneralFiles', ['deleteDistFolder'], function() {// other files n
     .pipe(gulp.dest('./dist'));
 });
 
-gulp.task('optimizeImages', ['deleteDistFolder'], function() {
+gulp.task('optimizeImages', function() {
     return gulp.src(['./app/assets/images/**/*', '!./app/assets/images/icons', '!./app/assets/images/icons/**/*'])// ! excludes
     .pipe(imagemin({
         progressive: true,
@@ -45,11 +45,11 @@ gulp.task('optimizeImages', ['deleteDistFolder'], function() {
     .pipe(gulp.dest('./dist/assets/images'));
 });
 
-gulp.task('useminTrigger', ['deleteDistFolder'], function() {
+gulp.task('useminTrigger', function() {
     gulp.start('usemin');
 });
 
-gulp.task('usemin', ['styles', 'scripts'], function () {
+gulp.task('usemin', gulp.series('styles', 'scripts'), function () {
     return gulp.src('./app/index.html')
     .pipe(usemin({
         css: [function() {return rev()}, function() {return cssnano()}],
@@ -58,4 +58,7 @@ gulp.task('usemin', ['styles', 'scripts'], function () {
     .pipe(gulp.dest('./dist'));
 });
 
-gulp.task('build', ['deleteDistFolder', 'copyGeneralFiles', 'optimizeImages', 'useminTrigger']);
+//gulp.series: dependencies that are executed sequentially
+//gulp.parallel: dependencies that are executed in parallel
+//dependencies are always executed before the main task ('icons')
+gulp.task('build', gulp.series('deleteDistFolder', gulp.parallel('copyGeneralFiles', 'optimizeImages', 'useminTrigger')));
