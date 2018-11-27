@@ -1,4 +1,4 @@
-//renamed all 'dist' occurrences to 'docs' to be able to publish to GitHub Pages
+//rename all 'dist' occurrences to 'docs' to be able to publish to GitHub Pages
 var gulp = require('gulp'),
 imagemin = require('gulp-imagemin'),
 usemin = require('gulp-usemin'),
@@ -17,7 +17,7 @@ gulp.task('previewDist', function() {
     });
 });
 
-gulp.task('deleteDistFolder', gulp.series('icons'), function () {
+gulp.task('deleteDistFolder', function () {
     return del('./dist');
 });
 
@@ -45,11 +45,7 @@ gulp.task('optimizeImages', function() {
     .pipe(gulp.dest('./dist/assets/images'));
 });
 
-gulp.task('useminTrigger', function() {
-    gulp.start('usemin');
-});
-
-gulp.task('usemin', gulp.series('styles', 'scripts'), function () {
+gulp.task('usemin', function () {
     return gulp.src('./app/index.html')
     .pipe(usemin({
         css: [function() {return rev()}, function() {return cssnano()}],
@@ -58,7 +54,4 @@ gulp.task('usemin', gulp.series('styles', 'scripts'), function () {
     .pipe(gulp.dest('./dist'));
 });
 
-//gulp.series: dependencies that are executed sequentially
-//gulp.parallel: dependencies that are executed in parallel
-//dependencies are always executed before the main task ('icons')
-gulp.task('build', gulp.series('deleteDistFolder', gulp.parallel('copyGeneralFiles', 'optimizeImages', 'useminTrigger')));
+gulp.task('build', gulp.series('icons', 'deleteDistFolder', gulp.parallel('copyGeneralFiles', 'optimizeImages', gulp.series('styles', gulp.series('modernizr', 'scripts'), 'usemin'))));
