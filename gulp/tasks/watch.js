@@ -7,20 +7,20 @@ gulp.task('watch', function(){
     browserSync.init ({
         notify: false,//hide notification label on the browser about browserSync actions
         server: {
-            baseDir: "app"
+            baseDir: "src"
         }
     });
 
-    gulp.watch("./app/*.html").on('change', browserSync.reload);
+    gulp.watch("./src/*.html").on('change', browserSync.reload);
 
-    gulp.watch('./app/assets/styles/**/*.css', gulp.series('styles', 'cssInject'));
+    gulp.watch('./src/assets/styles/**/*.css', gulp.series('styles', 'cssInject'));
     
-    gulp.watch('./app/assets/scripts/**/*.js', gulp.series('modernizr', 'scripts', 'scriptsRefresh'));
+    gulp.watch('./src/assets/scripts/**/*.js', gulp.series('modernizr', 'scripts', 'scriptsRefresh'));
 
 });
 
 gulp.task('cssInject', function(){
-    return gulp.src('./app/temp/styles/styles.css')
+    return gulp.src('./src/temp/styles/styles.css')
         .pipe(browserSync.stream());
 });
 

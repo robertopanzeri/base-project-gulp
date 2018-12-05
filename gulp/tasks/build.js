@@ -23,20 +23,20 @@ gulp.task('deleteDistFolder', function () {
 
 gulp.task('copyGeneralFiles', function() {// other files needed, not part of my app (e.g. Wordpress files)
     var pathsToCopy = [
-        './app/**/*',
-        '!./app/index.html',
-        '!./app/assets/images/**',
-        '!./app/assets/styles/**',
-        '!./app/assets/scripts/**',
-        '!./app/temp/**',
-        '!./app/temp'
+        './src/**/*',
+        '!./src/index.html',
+        '!./src/assets/images/**',
+        '!./src/assets/styles/**',
+        '!./src/assets/scripts/**',
+        '!./src/temp/**',
+        '!./src/temp'
     ]
     return gulp.src(pathsToCopy)
     .pipe(gulp.dest('./dist'));
 });
 
 gulp.task('optimizeImages', function() {
-    return gulp.src(['./app/assets/images/**/*', '!./app/assets/images/icons', '!./app/assets/images/icons/**/*'])// ! excludes
+    return gulp.src(['./src/assets/images/**/*', '!./src/assets/images/icons', '!./src/assets/images/icons/**/*'])// ! excludes
     .pipe(imagemin({
         progressive: true,
         interlaced: true,
@@ -46,7 +46,7 @@ gulp.task('optimizeImages', function() {
 });
 
 gulp.task('usemin', function () {
-    return gulp.src('./app/index.html')
+    return gulp.src('./src/index.html')
     .pipe(usemin({
         css: [function() {return rev()}, function() {return cssnano()}],
         js: [function() {return rev()}, function() {return uglify()}]
