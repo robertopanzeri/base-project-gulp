@@ -24,7 +24,7 @@ gulp.task('deleteDistFolder', function () {
 gulp.task('copyGeneralFiles', function() {// other files needed, not part of my app (e.g. Wordpress files)
     var pathsToCopy = [
         './src/**/*',
-        '!./src/index.html',
+        '!./app/**/*.html',
         '!./src/assets/images/**',
         '!./src/assets/styles/**',
         '!./src/assets/scripts/**',
