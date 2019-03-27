@@ -1,5 +1,7 @@
-* {
-    box-sizing: border-box;
+* { /*Browser reset*/
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /*Width and height include padding and border*/
 }
 body{
     font-family: sans-serif;
