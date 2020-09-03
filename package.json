@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "lazysizes": "^4.1.4",
+    "lazysizes": "^5.2.1",
     "picturefill": "^3.0.3",
     "smooth-scroll": "^15.0.0",
     "waypoints": "^4.0.1"
